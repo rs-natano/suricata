@@ -466,8 +466,6 @@ typedef struct Signature_ {
     /** Reference */
     DetectReference *references;
 
-    /* Be careful, this pointer is only valid while parsing the sig,
-     * to warn the user about any possible problem */
     const char *sig_str;
 
     SignatureInitData *init_data;

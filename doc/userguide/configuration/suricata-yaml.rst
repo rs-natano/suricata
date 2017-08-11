@@ -309,6 +309,7 @@ integration with 3rd party tools like logstash.
             tls: yes                 # enable dumping of tls fields
             ssh: yes                 # enable dumping of ssh fields
             smtp: yes                # enable dumping of smtp fields
+            # rule: yes                # enable dumping of signature definition
 
             # Enable the logging of tagged packets for rules using the
             # "tag" keyword.
