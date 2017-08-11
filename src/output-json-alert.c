@@ -81,6 +81,7 @@
 #define LOG_JSON_SMTP           0x040
 #define LOG_JSON_TAGGED_PACKETS 0x080
 #define LOG_JSON_DNP3           0x100
+#define LOG_JSON_RULE           0x200
 
 #define JSON_STREAM_BUFFER_SIZE 4096
 
@@ -386,6 +387,13 @@ static int AlertJson(ThreadVars *tv, JsonAlertLogThread *aft, const Packet *p)
             AlertJsonPacket(p, js);
         }
 
+        /* signature text */
+        if (json_output_ctx->flags & LOG_JSON_RULE) {
+            hjs = json_object_get(js, "alert");
+            if (json_is_object(hjs))
+                json_object_set_new(hjs, "rule", json_string(pa->s->sig_str));
+        }
+
         HttpXFFCfg *xff_cfg = json_output_ctx->xff_cfg;
 
         /* xff header */
@@ -637,6 +645,7 @@ static void XffSetup(AlertJsonOutputCtx *json_output_ctx, ConfNode *conf)
         const char *smtp = ConfNodeLookupChildValue(conf, "smtp");
         const char *tagged_packets = ConfNodeLookupChildValue(conf, "tagged-packets");
         const char *dnp3 = ConfNodeLookupChildValue(conf, "dnp3");
+        const char *rule = ConfNodeLookupChildValue(conf, "rule");
 
         if (ssh != NULL) {
             if (ConfValIsTrue(ssh)) {
@@ -692,6 +701,11 @@ static void XffSetup(AlertJsonOutputCtx *json_output_ctx, ConfNode *conf)
         if (dnp3 != NULL) {
             if (ConfValIsTrue(dnp3)) {
                 json_output_ctx->flags |= LOG_JSON_DNP3;
+            }
+        }
+        if (rule != NULL) {
+            if (ConfValIsTrue(rule)) {
+                json_output_ctx->flags |= LOG_JSON_RULE;
             }
         }
 
