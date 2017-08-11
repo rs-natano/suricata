@@ -45,6 +45,7 @@ The most common way to use this is through 'EVE', which is a firehose approach w
             tls: yes                 # enable dumping of tls fields
             ssh: yes                 # enable dumping of ssh fields
             smtp: yes                # enable dumping of smtp fields
+            # rule: yes                # enable dumping of signature definition
 
             # Enable the logging of tagged packets for rules using the
             # "tag" keyword.

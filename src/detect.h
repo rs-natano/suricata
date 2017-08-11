@@ -492,8 +492,6 @@ typedef struct Signature_ {
      *  group. */
     int whitelist;
 
-    /* Be careful, this pointer is only valid while parsing the sig,
-     * to warn the user about any possible problem */
     char *sig_str;
 
     int prefilter_list;
